@@ -5,12 +5,12 @@
 Summary:	A library to rewrite HTTP URLs to HTTPS URLs
 Summary(pl.UTF-8):	Biblioteka przepisująca URL-e HTTP na HTTPS
 Name:		libhttpseverywhere
-Version:	0.4.8
+Version:	0.6.5
 Release:	1
 License:	LGPL v3+
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/libhttpseverywhere/0.4/%{name}-%{version}.tar.xz
-# Source0-md5:	3d9ee367a50b73643884abf8f5a35e15
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/libhttpseverywhere/0.6/%{name}-%{version}.tar.xz
+# Source0-md5:	0b4ac3349049d5764d2b082172802578
 URL:		https://github.com/GNOME/libhttpseverywhere
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gobject-introspection-devel
@@ -23,6 +23,7 @@ BuildRequires:	meson >= 0.39.1
 BuildRequires:	ninja
 BuildRequires:	pkgconfig
 BuildRequires:	vala
+BuildRequires:	vala-libgee
 BuildRequires:	valadoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -105,22 +106,15 @@ Dokumentacja API biblioteki HTTPSEverywhere.
 %setup -q
 
 %build
-CC="%{__cc}" \
-CFLAGS="%{rpmcflags} %{rpmcppflags}" \
-LDFLAGS="%{rpmldflags}" \
-meson build \
-	--buildtype=plain \
-	--prefix=%{_prefix} \
-	--libdir=%{_libdir} \
+%meson build \
 	%{?with_apidocs:-Denable_valadoc=true}
 
-ninja -C build -v
+%meson_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-DESTDIR=$RPM_BUILD_ROOT \
-ninja -C build -v install
+%meson_install -C build
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -131,24 +125,24 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.md
-%attr(755,root,root) %{_libdir}/libhttpseverywhere-0.4.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhttpseverywhere-0.4.so.0
-%{_libdir}/girepository-1.0/HTTPSEverywhere-0.4.typelib
+%attr(755,root,root) %{_libdir}/libhttpseverywhere-0.6.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libhttpseverywhere-0.6.so.0
+%{_libdir}/girepository-1.0/HTTPSEverywhere-0.6.typelib
 %{_datadir}/libhttpseverywhere
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libhttpseverywhere-0.4.so
-%{_includedir}/httpseverywhere-0.4
-%{_pkgconfigdir}/httpseverywhere-0.4.pc
+%attr(755,root,root) %{_libdir}/libhttpseverywhere-0.6.so
+%{_includedir}/httpseverywhere-0.6
+%{_pkgconfigdir}/httpseverywhere-0.6.pc
 
 %files -n vala-libhttpseverywhere
 %defattr(644,root,root,755)
-%{_datadir}/vala/vapi/httpseverywhere-0.4.deps
-%{_datadir}/vala/vapi/httpseverywhere-0.4.vapi
+%{_datadir}/vala/vapi/httpseverywhere-0.6.deps
+%{_datadir}/vala/vapi/httpseverywhere-0.6.vapi
 
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-%{_datadir}/devhelp/books/httpseverywhere-0.4
+%{_datadir}/devhelp/books/httpseverywhere-0.6
 %endif
