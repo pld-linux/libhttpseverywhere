@@ -5,12 +5,12 @@
 Summary:	A library to rewrite HTTP URLs to HTTPS URLs
 Summary(pl.UTF-8):	Biblioteka przepisująca URL-e HTTP na HTTPS
 Name:		libhttpseverywhere
-Version:	0.6.5
+Version:	0.8.2
 Release:	1
 License:	LGPL v3+
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/libhttpseverywhere/0.6/%{name}-%{version}.tar.xz
-# Source0-md5:	0b4ac3349049d5764d2b082172802578
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/libhttpseverywhere/0.8/%{name}-%{version}.tar.xz
+# Source0-md5:	569d9f84345aa9c1ee26da295a096837
 URL:		https://github.com/GNOME/libhttpseverywhere
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gobject-introspection-devel
@@ -125,24 +125,24 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.md
-%attr(755,root,root) %{_libdir}/libhttpseverywhere-0.6.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhttpseverywhere-0.6.so.0
-%{_libdir}/girepository-1.0/HTTPSEverywhere-0.6.typelib
+%attr(755,root,root) %{_libdir}/libhttpseverywhere-0.8.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libhttpseverywhere-0.8.so.0
+%{_libdir}/girepository-1.0/HTTPSEverywhere-0.8.typelib
 %{_datadir}/libhttpseverywhere
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libhttpseverywhere-0.6.so
-%{_includedir}/httpseverywhere-0.6
-%{_pkgconfigdir}/httpseverywhere-0.6.pc
+%attr(755,root,root) %{_libdir}/libhttpseverywhere-0.8.so
+%{_includedir}/httpseverywhere-0.8
+%{_pkgconfigdir}/httpseverywhere-0.8.pc
 
 %files -n vala-libhttpseverywhere
 %defattr(644,root,root,755)
-%{_datadir}/vala/vapi/httpseverywhere-0.6.deps
-%{_datadir}/vala/vapi/httpseverywhere-0.6.vapi
+%{_datadir}/vala/vapi/httpseverywhere-0.8.deps
+%{_datadir}/vala/vapi/httpseverywhere-0.8.vapi
 
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-%{_datadir}/devhelp/books/httpseverywhere-0.6
+%{_datadir}/devhelp/books/httpseverywhere-0.8
 %endif
