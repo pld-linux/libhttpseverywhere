@@ -5,13 +5,14 @@
 Summary:	A library to rewrite HTTP URLs to HTTPS URLs
 Summary(pl.UTF-8):	Biblioteka przepisująca URL-e HTTP na HTTPS
 Name:		libhttpseverywhere
-Version:	0.8.2
+Version:	0.8.3
 Release:	1
 License:	LGPL v3+
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/libhttpseverywhere/0.8/%{name}-%{version}.tar.xz
-# Source0-md5:	569d9f84345aa9c1ee26da295a096837
-URL:		https://github.com/GNOME/libhttpseverywhere
+# Source0-md5:	c2a029fe6adac0d27e393cd2cfe74c7f
+Patch0:		%{name}-vala0.42.patch
+URL:		https://gitlab.gnome.org/GNOME/libhttpseverywhere
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	json-glib-devel
@@ -20,11 +21,14 @@ BuildRequires:	libgee-devel >= 0.8
 BuildRequires:	libsoup-devel >= 2.4
 BuildRequires:	libxml2-devel >= 2.0
 BuildRequires:	meson >= 0.39.1
-BuildRequires:	ninja
+BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	tar >= 1:1.22
 BuildRequires:	vala
-BuildRequires:	vala-libgee
-BuildRequires:	valadoc
+BuildRequires:	vala-libgee >= 0.8
+%{?with_apidocs:BuildRequires:	valadoc}
+BuildRequires:	xz
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -104,17 +108,18 @@ Dokumentacja API biblioteki HTTPSEverywhere.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %meson build \
 	%{?with_apidocs:-Denable_valadoc=true}
 
-%meson_build -C build
+%ninja_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%meson_install -C build
+%ninja_install -C build
 
 %clean
 rm -rf $RPM_BUILD_ROOT

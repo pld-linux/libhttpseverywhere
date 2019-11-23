@@ -1,0 +1,45 @@
+From 6da08ef1ade9ea267cecf14dd5cb2c3e6e5e50cb Mon Sep 17 00:00:00 2001
+From: Rico Tzschichholz <ricotz@ubuntu.com>
+Date: Tue, 8 Jan 2019 08:27:59 +0100
+Subject: [PATCH] update: Adapt to libarchive binding change since valac 0.42
+
+Fixes https://gitlab.gnome.org/GNOME/libhttpseverywhere/issues/1
+---
+ src/update.vala | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/src/update.vala b/src/update.vala
+index 9168e28..86e39c1 100644
+--- a/src/update.vala
++++ b/src/update.vala
+@@ -188,7 +188,12 @@ namespace HTTPSEverywhere {
+ 
+             Archive.Read zipreader = new Archive.Read();
+             zipreader.set_format(Archive.Format.ZIP);
++#if VALA_0_42
++            output.length = (int) size_read;
++            zipreader.open_memory(output);
++#else
+             zipreader.open_memory(output, size_read);
++#endif
+ 
+             string json = "";
+             unowned Archive.Entry e = null;
+@@ -198,11 +203,15 @@ namespace HTTPSEverywhere {
+                     found_ruleset_file = true;
+                     uint8[] jsonblock = new uint8[1024*1024];
+                     while (true) {
+-                        var r = zipreader.read_data(jsonblock, 1024*1024);
++#if VALA_0_42
++                        var r = zipreader.read_data(jsonblock);
++#else
++                        var r = zipreader.read_data(jsonblock, jsonblock.length);
++#endif
+                         if (r < 0) {
+                             throw new UpdateError.CANT_READ_FROM_ARCHIVE("Failed reading archive stream");
+                         }
+-                        if (r < 1024*1024 && r != 0) {
++                        if (r < jsonblock.length && r != 0) {
+                             uint8[] remainder = new uint8[r];
+                             Memory.copy(remainder, jsonblock, r);
+                             json += (string)remainder;
