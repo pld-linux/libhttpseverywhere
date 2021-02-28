@@ -96,9 +96,7 @@ Summary:	API documentation for HTTPSEverywhere library
 Summary(pl.UTF-8):	Dokumentacja API biblioteki HTTPSEverywhere
 Group:		Documentation
 Requires:	devhelp
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description apidocs
 API documentation for HTTPSEverywhere library.
