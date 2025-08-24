@@ -23,7 +23,7 @@ BuildRequires:	libxml2-devel >= 2.0
 BuildRequires:	meson >= 0.39.1
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	vala
 BuildRequires:	vala-libgee >= 0.8
