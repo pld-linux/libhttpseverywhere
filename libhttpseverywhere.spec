@@ -9,7 +9,7 @@ Version:	0.8.3
 Release:	1
 License:	LGPL v3+
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/libhttpseverywhere/0.8/%{name}-%{version}.tar.xz
+Source0:	https://download.gnome.org/sources/libhttpseverywhere/0.8/%{name}-%{version}.tar.xz
 # Source0-md5:	c2a029fe6adac0d27e393cd2cfe74c7f
 Patch0:		%{name}-vala0.42.patch
 URL:		https://gitlab.gnome.org/GNOME/libhttpseverywhere
